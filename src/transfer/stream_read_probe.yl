@@ -1,4 +1,3 @@
-// YLang-only probe for the documented synchronous file streaming API.
 function main() -> int {
     let int input = io.stream_open_read("input.bin");
     if (input < 0) {

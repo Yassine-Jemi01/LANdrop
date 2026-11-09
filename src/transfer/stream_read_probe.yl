@@ -1,0 +1,30 @@
+// YLang-only probe for the documented synchronous file streaming API.
+function main() -> int {
+    let int input = io.stream_open_read("input.bin");
+    if (input < 0) {
+        print("Cannot open input.bin");
+        return 1;
+    }
+
+    let byte chunk[] = [
+        byte(0), byte(0), byte(0), byte(0),
+        byte(0), byte(0), byte(0), byte(0)
+    ];
+
+    let int total = 0;
+    let int count = io.stream_read(input, chunk);
+    while (count > 0) {
+        total = total + count;
+        count = io.stream_read(input, chunk);
+    }
+
+    let bool closed = io.stream_close(input);
+    if (count < 0 || !closed) {
+        print("Streaming read failed");
+        return 1;
+    }
+
+    print("Bytes read:");
+    print(total);
+    return 0;
+}

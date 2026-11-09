@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+BIN="$ROOT/build/landrop-net"
+if [ ! -x "$BIN" ]; then
+    echo "LANdrop is not built. Run: make" >&2
+    exit 127
+fi
+exec "$BIN" "$@"
